@@ -11,6 +11,9 @@ import androidx.fragment.app.Fragment
 
 class FormFlowFragment : Fragment() {
 
+    private lateinit var formViewModel: FormViewModel
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -22,6 +25,11 @@ class FormFlowFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        formViewModel = ViewModelProvider(
+            this,
+            FormViewModelFactory(ServiceLocator.provideAppRepository())
+        )[FormViewModel::class.java]
+
         val answer1: EditText = view.findViewById(R.id.answer1)
         val answer2: EditText = view.findViewById(R.id.answer2)
         val answer3: EditText = view.findViewById(R.id.answer3)
@@ -31,7 +39,11 @@ class FormFlowFragment : Fragment() {
             val answer1Text = answer1.text.toString()
             val answer2Text = answer2.text.toString()
             val answer3Text = answer3.text.toString()
-
+            formViewModel.sendFormData(FormItem(
+                answer1Text,
+                answer2Text,
+                answer3Text
+            ))
             // For now, just show a toast with the answers
             Toast.makeText(
                 requireContext(),
