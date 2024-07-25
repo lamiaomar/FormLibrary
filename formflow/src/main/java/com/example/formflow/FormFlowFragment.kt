@@ -79,7 +79,7 @@ class FormFlowFragment : Fragment() {
 
     private fun addSubmitButton(container: LinearLayout) {
         val submitButton = Button(context).apply {
-            text = resources.getString(R.string.submit_button)
+            text = "Submit"
             setOnClickListener {
                 formViewModel?.sendFormData(
                     collectFormData()
