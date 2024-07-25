@@ -23,7 +23,7 @@ import remote.request.FormItem
 
 class FormFlowFragment : Fragment() {
 
-    private lateinit var formViewModel: FormViewModel
+    private var formViewModel: FormViewModel? = null
 
     // Arguments
     private var formFieldsArgument: ArrayList<Field> = arrayListOf()
@@ -43,10 +43,17 @@ class FormFlowFragment : Fragment() {
             formFieldsArgument = it.getParcelableArrayList("formFields") ?: arrayListOf()
         }
 
-        formViewModel = ViewModelProvider(
-            this,
-            FormViewModelFactory(ServiceLocator.provideAppRepository())
-        )[FormViewModel::class.java]
+        val formContext = context ?: requireContext()
+        if (GoogleSheetURL.getBaseUrl(formContext).isNullOrBlank().not()) {
+            formViewModel = ViewModelProvider(
+                this,
+                FormViewModelFactory(
+                    ServiceLocator.provideAppRepository(
+                        baseUrl = GoogleSheetURL.getBaseUrl(formContext) ?: ""
+                    )
+                )
+            )[FormViewModel::class.java]
+        }
 
         if (formFieldsArgument.isNotEmpty()) {
             addFormFields(formFields = formFieldsArgument)
@@ -72,9 +79,9 @@ class FormFlowFragment : Fragment() {
 
     private fun addSubmitButton(container: LinearLayout) {
         val submitButton = Button(context).apply {
-            text = "Submit"
+            text = resources.getString(R.string.submit_button)
             setOnClickListener {
-                formViewModel.sendFormData(
+                formViewModel?.sendFormData(
                     collectFormData()
                 )
 
