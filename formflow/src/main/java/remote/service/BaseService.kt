@@ -20,18 +20,17 @@ interface GoogleSheetsService {
     ): Response<ResponseItem>
 }
 
-private val moshi = Moshi.Builder()
-    .add(KotlinJsonAdapterFactory())
-    .build()
-
-
-private val retrofit = Retrofit.Builder()
-    .addConverterFactory(MoshiConverterFactory.create(moshi))
-    .baseUrl(BASE_URL)
-    .build()
-
 object GoogleSheetApi {
-    val retrofitService: GoogleSheetsService by lazy {
-        retrofit.create(GoogleSheetsService::class.java)
+    fun createService(baseUrl: String): GoogleSheetsService {
+        val moshi = Moshi.Builder()
+            .add(KotlinJsonAdapterFactory())
+            .build()
+
+        val retrofit = Retrofit.Builder()
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .baseUrl(baseUrl)
+            .build()
+
+        return retrofit.create(GoogleSheetsService::class.java)
     }
 }
