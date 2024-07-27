@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.RadioGroup
@@ -19,6 +20,7 @@ import com.example.formflow.field.Field
 import com.example.formflow.field.FieldType
 import com.example.formflow.field.FormBuilder
 import com.example.formflow.field.GoogleSheetURL
+import android.graphics.Color
 import remote.request.FormItem
 
 class FormFlowFragment : Fragment() {
@@ -27,6 +29,7 @@ class FormFlowFragment : Fragment() {
 
     // Arguments
     private var formFieldsArgument: ArrayList<Field> = arrayListOf()
+    private var submitButtonColor: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,6 +44,7 @@ class FormFlowFragment : Fragment() {
         // Retrieve arguments
         arguments?.let {
             formFieldsArgument = it.getParcelableArrayList("formFields") ?: arrayListOf()
+            submitButtonColor = it.getString("submit_button_color") ?: ""
         }
 
         val formContext = context ?: requireContext()
@@ -58,6 +62,12 @@ class FormFlowFragment : Fragment() {
         if (formFieldsArgument.isNotEmpty()) {
             addFormFields(formFields = formFieldsArgument)
         }
+
+        // Setup close button
+        view.findViewById<ImageButton>(R.id.button_close).setOnClickListener {
+            requireActivity().finish()
+        }
+
     }
 
     private fun addFormFields(formFields: List<Field>) {
@@ -80,6 +90,10 @@ class FormFlowFragment : Fragment() {
     private fun addSubmitButton(container: LinearLayout) {
         val submitButton = Button(context).apply {
             text = "Submit"
+            if (submitButtonColor.isNotEmpty()) {
+                setBackgroundColor(Color.parseColor(submitButtonColor))
+            }
+
             setOnClickListener {
                 formViewModel?.sendFormData(
                     collectFormData()
@@ -87,9 +101,11 @@ class FormFlowFragment : Fragment() {
 
                 Toast.makeText(
                     requireContext(),
-                    "Answers",
+                    "Your form has been submitted successfully!",
                     Toast.LENGTH_LONG
                 ).show()
+
+                requireActivity().finish()
             }
         }
         container.addView(submitButton)
