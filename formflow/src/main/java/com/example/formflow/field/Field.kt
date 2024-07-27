@@ -2,6 +2,7 @@ package com.example.formflow.field
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.example.formflow.field.custome.CustomField
 
 data class Field(
     val type: FieldType,
@@ -10,6 +11,7 @@ data class Field(
     val isMandatory: Boolean,
     var radioList: ArrayList<String> = arrayListOf(),
     var dropList: ArrayList<String> = arrayListOf(),
+    var customField: CustomField? = null
 ): Parcelable {
     constructor(parcel: Parcel) : this(
         FieldType.values()[parcel.readInt()],

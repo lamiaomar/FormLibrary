@@ -1,0 +1,22 @@
+<!-- In the app module under res/layout/custom_rating_field_layout.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/custom_field_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rate our service:"
+        android:textSize="16sp"
+        android:textColor="@android:color/black" />
+
+    <RatingBar
+        android:id="@+id/custom_field_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize="1.0" />
+</LinearLayout>

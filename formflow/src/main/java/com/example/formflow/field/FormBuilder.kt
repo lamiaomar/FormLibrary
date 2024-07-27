@@ -11,6 +11,7 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Spinner
 import android.widget.TextView
+import com.example.formflow.field.custome.CustomField
 
 object FormBuilder {
      fun addRadioButton(context: Context, container: LinearLayout, field: Field) {
@@ -66,5 +67,9 @@ object FormBuilder {
         textView.setTextColor(Color.parseColor(field.color))
         container.addView(textView)
         addSpacing(context, container, 10)
+    }
+
+    fun addCustomField(context: Context, container: LinearLayout, customField: CustomField) {
+        container.addView(customField.getView())
     }
 }

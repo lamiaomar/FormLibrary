@@ -21,6 +21,7 @@ import com.example.formflow.field.FieldType
 import com.example.formflow.field.FormBuilder
 import com.example.formflow.field.GoogleSheetURL
 import android.graphics.Color
+import com.example.formflow.field.custome.CustomField
 import com.example.formflow.listener.FormFlowListener
 import remote.request.FormItem
 
@@ -82,6 +83,12 @@ class FormFlowFragment : Fragment() {
                     FieldType.RADIO -> FormBuilder.addRadioButton(formContext, formContainer, it)
                     FieldType.DROPLIST -> FormBuilder.addDropList(formContext, formContainer, it)
                     FieldType.EDITTEXT -> FormBuilder.addEditText(formContext, formContainer, it)
+                    FieldType.CUSTOM -> {
+                        it.customField?.let { customView ->
+                            FormBuilder.addCustomField(formContext, formContainer, customView)
+                        }
+
+                    }
                 }
             }
             addSubmitButton(formContainer)
@@ -137,6 +144,10 @@ class FormFlowFragment : Fragment() {
 
                     is EditText -> {
                         answers.add(view.text.toString())
+                    }
+
+                    is CustomField -> {
+                        answers.add(view.getValue())
                     }
                 }
             }
