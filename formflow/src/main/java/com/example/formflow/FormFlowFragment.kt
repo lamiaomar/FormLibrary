@@ -21,11 +21,13 @@ import com.example.formflow.field.FieldType
 import com.example.formflow.field.FormBuilder
 import com.example.formflow.field.GoogleSheetURL
 import android.graphics.Color
+import com.example.formflow.listener.FormFlowListener
 import remote.request.FormItem
 
 class FormFlowFragment : Fragment() {
 
     private var formViewModel: FormViewModel? = null
+    private var formFlowListener: FormFlowListener? = null
 
     // Arguments
     private var formFieldsArgument: ArrayList<Field> = arrayListOf()
@@ -65,9 +67,9 @@ class FormFlowFragment : Fragment() {
 
         // Setup close button
         view.findViewById<ImageButton>(R.id.button_close).setOnClickListener {
-            requireActivity().finish()
+            formFlowListener?.onFormClosed()
         }
-
+        formFlowListener = activity as? FormFlowListener
     }
 
     private fun addFormFields(formFields: List<Field>) {
@@ -105,7 +107,7 @@ class FormFlowFragment : Fragment() {
                     Toast.LENGTH_LONG
                 ).show()
 
-                requireActivity().finish()
+                formFlowListener?.onFormSubmitted()
             }
         }
         container.addView(submitButton)
