@@ -86,5 +86,57 @@ GoogleSheetURL.saveBaseUrl(
 )
 ```
 
+**Usage**
+To create different types of form fields, use `Field` class and its Properties:
+
+- type: The type of the field (EDITTEXT, RADIO, DROPLIST, CUSTOM).
+- question: The question or label for the field.
+- color: The color for the field UI element.
+- isMandatory: Boolean indicating if the field is mandatory.
+- radioList and dropList: Lists of options for radio button and dropdown fields, respectively.
+
+  Example of createion field:
+  ```
+  val radioField = Field(
+  type = FieldType.RADIO,
+  question = "How did you hear about the event?",
+  color = "#b26691",
+  isMandatory = true,
+  radioList = arrayListOf("Friends", "Social Media", "Website", "Other"))
+  ```
+
+*Custom Fields*
+
+To create and integrate custom fields, you need to use CustomField interface
+
+Example of a Custom Field Implementation:
+
+```
+class CustomRatingField @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null
+) : LinearLayout(context, attrs), CustomField {
+
+    private val ratingBar: RatingBar
+    private val label: TextView
+
+    init {
+        val view = LayoutInflater.from(context).inflate(R.layout.custom_rating_field_layout, this, true)
+        ratingBar = view.findViewById(R.id.custom_field_rating)
+        label = view.findViewById(R.id.custom_field_label)
+    }
+
+    override fun getValue(): String {
+        return ratingBar.rating.toString()
+    }
+
+    override fun getView(): View {
+        return this
+    }
+}
+```
+**Note: To customize your forms with various custom fields, you need to implement `getValue()` and `getView()`**
+
+
 
 
