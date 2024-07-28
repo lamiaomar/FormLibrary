@@ -86,6 +86,11 @@ GoogleSheetURL.saveBaseUrl(
 )
 ```
 
+> [!NOTE]
+> Make sure to set the full URL for the Google Sheets script, including the trailing `/` but excluding the exec word. For example, your URL should look like this: https://script.google.com/macros/s/your-script-id/ without exec at the end.
+
+-------------------------------------
+
 **Usage**
 To create different types of form fields, use `Field` class and its Properties:
 
@@ -135,8 +140,73 @@ class CustomRatingField @JvmOverloads constructor(
     }
 }
 ```
-**Note: To customize your forms with various custom fields, you need to implement `getValue()` and `getView()`**
+> [!NOTE]
+> To customize your forms with various custom fields, you need to implement `getValue()` and `getView()`.
+
+-------------------------------------
+
+**Submitting Form Data** 
+
+***Collecting Data:***
+
+Form library provides an easy way to collect data from the form fields. The data from each field is gathered and processed when the form is submitted.
+
+***Explanation of How to Collect Form Data:*** 
+
+The collectFormData() function is responsible for gathering data from each form field. It traverses through all the form fields, collects their values, and returns them as a FormItem object.
+
+***How to Handle Form Data in the App:***
+
+When the form is submitted, you can handle the collected data within your app by defining appropriate actions in the form submission process.
+
+In the `FormFlowFragment`, the `onFormClosed()` and `onFormSubmitted()` methods are part of the interface for handling form actions. These methods provide hooks for responding to form events, such as when the form is closed or submitted.
+
+***Sending Data***
+
+Once the data is collected from the form fields, it can be sent to a Google Sheet or other endpoints for storage and processing.
+
+------------------------------------
+
+**Troubleshooting**
+
+1- Form Data Not Submitting
+
+Solution: Ensure the Google Sheet URL is correctly set in your app. Check if the Google Sheets script is deployed properly and has the necessary permissions.
+
+2- Custom Fields Not Displaying
+
+Solution: Verify that your custom field implementation properly overrides `getView()` and `getValue()`. Ensure the custom field is added to the form configuration correctly.
+
+3- Google Sheets Script Errors
+
+Solution: Make sure the script is correctly added to your Google Sheet and deployed as a web app. Review the script for any syntax errors or permission issues.
 
 
+------------------------------------
 
+**Examples**
+
+Example Project Using Form library:
+
+To see a practical implementation of the Form library, you can refer to our example project available on GitHub. This project demonstrates how to set up, customize, and use the Form library in a real-world scenario.
+
+GitHub Repository: [FormsApplication](https://github.com/lamiaomar/FormApplication)
+
+In this example project, you will find:
+
+A complete setup of the FormFlow library.
+Examples of creating different types of form fields.
+Custom field implementations.
+Styling and customization of form fields and submit buttons.
+Integration with Google Sheets for form data submission.
+
+
+Feel free to clone the repository, explore the code, and use it as a reference for your own projects.
+
+------------------------------------
+
+**Conclusion**
+The Form library provides a flexible and powerful solution for creating customizable and reusable forms in Android applications. With built-in support for various form field types and the ability to add custom fields, developers can easily integrate complex forms into their apps. The library also simplifies the process of submitting form data to Google Sheets endpoints, making it an ideal choice for applications that require data collection and analysis.
+
+We hope this documentation has provided a clear and comprehensive guide to using the Form library. By following the steps outlined, you can quickly set up and start using the library to enhance your Android projects. If you encounter any issues or have any questions, please refer to the troubleshooting section or reach out for support. Happy coding!
 
