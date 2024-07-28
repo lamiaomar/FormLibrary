@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.RadioGroup
@@ -21,6 +20,7 @@ import com.example.formflow.field.FieldType
 import com.example.formflow.field.FormBuilder
 import com.example.formflow.field.GoogleSheetURL
 import android.graphics.Color
+import android.widget.ImageView
 import com.example.formflow.field.custome.CustomField
 import com.example.formflow.listener.FormFlowListener
 import remote.request.FormItem
@@ -67,7 +67,7 @@ class FormFlowFragment : Fragment() {
         }
 
         // Setup close button
-        view.findViewById<ImageButton>(R.id.button_close).setOnClickListener {
+        view.findViewById<ImageView>(R.id.button_close).setOnClickListener {
             formFlowListener?.onFormClosed()
         }
         formFlowListener = activity as? FormFlowListener
