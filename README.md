@@ -86,7 +86,7 @@ GoogleSheetURL.saveBaseUrl(
 )
 ```
 
-> [!NOTE]
+> [!IMPORTANT]
 > Make sure to set the full URL for the Google Sheets script, including the trailing `/` but excluding the exec word. For example, your URL should look like this: https://script.google.com/macros/s/your-script-id/ without exec at the end.
 
 -------------------------------------
